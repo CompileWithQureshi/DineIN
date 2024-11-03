@@ -16,7 +16,6 @@ const CreateCatego= async(req,res)=>{
         try {
 
             const existing=await Categories.findOne({CategoriesName})
-            console.log(existing);
 
             if (existing) {
                 return res.status(400).json({

@@ -4,6 +4,7 @@ import connectDB from './db/DB.js'; // Adjust the path to DB.js
 import tableroute from './Router/TableRouter.js';
 import dotenv from 'dotenv';
 import Category from './Router/CategoriesRouter.js';
+import itemRoute from './Router/ItemsRouter.js';
 dotenv.config();
 
 
@@ -12,7 +13,7 @@ const api = process.env.API_URL;
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
-app.use(api,tableroute,Category)
+app.use(api,tableroute,Category,itemRoute)
 
 // Uncomment to use this endpoint
 // app.get('/', (req, res) => {
