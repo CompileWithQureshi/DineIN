@@ -5,6 +5,7 @@ import tableroute from './Router/TableRouter.js';
 import dotenv from 'dotenv';
 import Category from './Router/CategoriesRouter.js';
 import itemRoute from './Router/ItemsRouter.js';
+import OrderRoute from './Router/OrdersRouter.js';
 dotenv.config();
 
 
@@ -13,7 +14,7 @@ const api = process.env.API_URL;
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
-app.use(api,tableroute,Category,itemRoute)
+app.use(api,tableroute,Category,itemRoute,OrderRoute)
 
 // Uncomment to use this endpoint
 // app.get('/', (req, res) => {
