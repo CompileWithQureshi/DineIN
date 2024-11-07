@@ -70,7 +70,7 @@ const GetAllOrders=async(req,res)=>{
 
     try {
 
-        const getData=await Orders.find().populate('product.item')
+        const getData=await Orders.find().populate('product.item').populate('user')
         if (!getData) {
             return res.status(404).json({
                 message: `Order not found`
@@ -107,7 +107,7 @@ const getOrderId=async(req,res)=>{
 
     try {
        
-        const getDataId=await Orders.findById(id).populate('product.item')
+        const getDataId=await Orders.findById(id).populate('product.item').populate('user')
     console.log(getDataId);
 
     if (!getDataId) {
