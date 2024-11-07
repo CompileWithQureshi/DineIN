@@ -7,7 +7,7 @@ const ItemsSchema=mongoose.Schema({
         required:true,
     },
     itemImage:{
-        type:String,
+        type:String,   
         required:true,
     },
     itemPrice:{
@@ -18,8 +18,16 @@ const ItemsSchema=mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'Categorie',
         required:true
+    },
+    discription:{
+        type:String,
     }
-})
+
+},
+{
+    timestamps: true
+}
+)
 
 
 

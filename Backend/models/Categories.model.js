@@ -13,7 +13,7 @@ const CateogriesSchema=mongoose.Schema({
    
 },
 {
-    Timestamp:true
+    timestamps: true,  
 }
 )
 

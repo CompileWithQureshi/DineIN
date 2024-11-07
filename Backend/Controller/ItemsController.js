@@ -3,9 +3,9 @@ import { Categories } from "../models/Categories.model.js";
 
 
 const CreateItems=async(req,res)=>{
-    const {itemName,itemImage,itemPrice,CategoriesName}=req.body
+    const {itemName,itemImage,itemPrice,CategoriesName,discription}=req.body
 
-    if (!itemName?.trim()|| !itemImage?.trim() ||!itemPrice===undefined||!CategoriesName) {
+    if (!itemName?.trim()|| !itemImage?.trim() ||!itemPrice===undefined||!CategoriesName || !discription?.trim()) {
         return res.status(400).json({
             message:'input field is empty '
         })
@@ -27,6 +27,7 @@ const CreateItems=async(req,res)=>{
             itemImage,
             itemPrice,
             CategoriesName:category._id,
+            discription
         })
 
 
@@ -49,9 +50,9 @@ const CreateItems=async(req,res)=>{
 
 
 const UpdateItem=async(req,res)=>{
-    const {itemName,itemImage,itemPrice}=req.body
+    const {itemName,itemImage,itemPrice,discription}=req.body
 
-    if (!itemName && !itemImage && itemPrice===undefined) {
+    if (!itemName && !itemImage && itemPrice===undefined && !discription) {
         return res.status(400).json({
             message:'At least one field must be valid'
         })
@@ -64,6 +65,9 @@ const UpdateItem=async(req,res)=>{
         if (itemName) updateData.itemName=itemName;
         if (itemImage) updateData.itemImage=itemImage;
         if (itemPrice) updateData.itemPrice=itemPrice;
+        if (discription) {
+            updateData.discription=discription
+        }
 
         
 
