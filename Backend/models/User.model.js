@@ -14,9 +14,12 @@ const UserSchema=mongoose.Schema(
             required:true
           },
           phoneNumber:{
-            type:Number,
-            required:true
-          }
+            type:String,
+            unique: true,
+            required:true,
+            match: /^[6-9]\d{9}$/,
+          },
+          
     },
     {
         timestamps:true

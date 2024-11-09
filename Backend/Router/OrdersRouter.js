@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 
-import { CreateOrder,GetAllOrders,getOrderId } from "../Controller/OrderController.js";
+import { CreateOrder,GetAllOrders, } from "../Controller/OrderController.js";
 
 
 
@@ -9,9 +9,8 @@ const OrderRoute=Router()
 
 
 
-OrderRoute.post('/createOrder',CreateOrder)
-OrderRoute.get('/getAllOrders',GetAllOrders)
-OrderRoute.get('/Orders/:id',getOrderId)
+OrderRoute.post('/order',CreateOrder)
+OrderRoute.get('/orders',GetAllOrders)
 
 
 

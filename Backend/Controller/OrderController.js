@@ -1,5 +1,6 @@
 import Orders from'../models/Order.model.js'
 import {Items} from '../models/Items.model.js'
+import { query } from 'express'
 
 
 
@@ -67,11 +68,15 @@ const CreateOrder =async(req,res)=>{
 } 
 
 const GetAllOrders=async(req,res)=>{
-
+    const {id}=req.query
+    let query={}
     try {
+        if (id) {
+            query._id = id; // Use `_id` if querying by order ID
+        }
 
-        const getData=await Orders.find().populate('product.item').populate('user')
-        if (!getData) {
+        const getData=await Orders.find(query).populate('product.item').populate('user')
+        if (!getData || getData.length ===0) {
             return res.status(404).json({
                 message: `Order not found`
             });
@@ -94,42 +99,7 @@ const GetAllOrders=async(req,res)=>{
     }
 }
 
-const getOrderId=async(req,res)=>{
-    const {id}=req.params
-
-    if (!id || id===undefined) {
-        res.status(400).json(
-            {
-                message:'id is Invalid'
-            }
-        )
-    }
-
-    try {
-       
-        const getDataId=await Orders.findById(id).populate('product.item').populate('user')
-    console.log(getDataId);
-
-    if (!getDataId) {
-        res.status(500).json({
-            message:'Server Error'
-        })
-    }
-
-    res.status(200).json(
-        {
-            message:'Data by Id',
-            data:getDataId
-        }
-    )
-
-    } catch (error) {
-        res.status(500).json({
-            message:`Error :${error}`
-        })
-    }
-    
-}
 
 
-export {CreateOrder,GetAllOrders,getOrderId}
+
+export {CreateOrder,GetAllOrders}

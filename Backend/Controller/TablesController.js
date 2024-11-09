@@ -43,7 +43,7 @@ const UpdateTable=async(req,res)=>{
     const {tableNumber,userName,status}=req.body;
 
 
-    if (!tableNumber || !userName || status === undefined) {
+    if (!tableNumber || !userName ) {
         return res.status(400).json({
             message: 'Input is empty or invalid'
         });
@@ -84,8 +84,13 @@ console.log("Received input:", req.body);
 
 
 const getAllTables = async (req, res) => {
+    const {id}=req.query
+    let query={}
     try {
-        const getAll = await Tables.find(); // Use find() instead of findAll()
+        if (id) {
+            query._id = id; // Use `_id` if querying by order ID
+        }
+        const getAll = await Tables.find(query); // Use find() instead of findAll()
 
         if (!getAll || getAll.length === 0) {
             return res.status(404).json({

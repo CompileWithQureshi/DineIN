@@ -9,10 +9,10 @@ const Category=Router()
 
 
 
-Category.post('/CreateCategory',CreateCatego)
-Category.put('/UpdateCategory/:id',UpdaeCategory)
-Category.get('/getAllCategory/',getAllCategory,DeleteOne)
-Category.delete('/DeleteOne/:id',DeleteOne)
+Category.post('/category',CreateCatego)
+Category.put('/category',UpdaeCategory)
+Category.get('/category/',getAllCategory)
+Category.delete('/category',DeleteOne)
 
 
 

@@ -6,8 +6,8 @@ import { CreateUser,loginUser } from "../Controller/UsersController.js";
 const UserRoute=Router()
 
 
-UserRoute.post('/createUser',CreateUser)
-UserRoute.post('/login',loginUser)
+UserRoute.post('/user',CreateUser)
+UserRoute.post('/user/login',loginUser)
 
 
 

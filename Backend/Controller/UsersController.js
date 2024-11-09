@@ -12,6 +12,14 @@ const CreateUser=async(req,res)=>{
         )
     }
 
+    const number=await User.findOne({phoneNumber})
+    if(number){
+        return res.status(400).json(
+            {
+                message:'Number already exits'
+            }
+        )
+    }
 
    try {
     const hasedPassword=await bcrypt.hash(password,10)

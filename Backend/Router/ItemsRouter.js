@@ -8,12 +8,10 @@ const itemRoute=Router()
 
 
 
-itemRoute.post('/createItem',CreateItems)
-itemRoute.put('/updateItem/:id',UpdateItem)
-itemRoute.get('/getAllItems',GetAllItems)
-itemRoute.delete('/deleteItem/:id',DeleteOne)
-
-
+itemRoute.post('/item',CreateItems)
+itemRoute.put('/item/:id',UpdateItem)
+itemRoute.get('/items',GetAllItems)
+itemRoute.delete('/item/:id',DeleteOne)
 
 
 

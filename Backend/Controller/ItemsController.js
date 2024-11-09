@@ -50,7 +50,7 @@ const CreateItems=async(req,res)=>{
 
 
 const UpdateItem=async(req,res)=>{
-    const {itemName,itemImage,itemPrice,discription}=req.body
+    const {itemName,itemImage,itemPrice,discription,}=req.body
 
     if (!itemName && !itemImage && itemPrice===undefined && !discription) {
         return res.status(400).json({
@@ -98,10 +98,15 @@ const UpdateItem=async(req,res)=>{
 
 
 const GetAllItems=async(req,res)=>{
+    const {id}=req.query
+    let query={}
 
     try {
+        if (id) {
+            query._id=id
+        }
 
-        const getAllData=await Items.find({});
+        const getAllData=await Items.find(query);
 
         if (!getAllData || getAllData.length === 0) {
             return res.status(404).json({

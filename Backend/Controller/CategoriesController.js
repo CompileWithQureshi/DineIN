@@ -41,7 +41,8 @@ const CreateCatego= async(req,res)=>{
 
 
 const UpdaeCategory=async(req,res)=>{
-    const {CategoriesName,Icon}=req.body;
+    
+    const {CategoriesName,Icon,id}=req.body;
 
     if(!CategoriesName && !Icon){
         return res.status(400).json({
@@ -56,7 +57,7 @@ const UpdaeCategory=async(req,res)=>{
     
     try {
         const updateCategory=await Categories.findOneAndUpdate(
-            { _id: req.params.id },
+            { _id: id },
             UpdateData,
             { new: true, runValidators: true }
         )
@@ -80,9 +81,14 @@ const UpdaeCategory=async(req,res)=>{
 }
 
 const getAllCategory=async(req,res)=>{
+    const {id}=req.query;
+    let query={}
    
     try {
-        const getAll=await Categories.find()
+        if (id) {
+            query._id=id
+        }
+        const getAll=await Categories.find(query)
         console.log(getAll);
         if ( getAll.length === 0) {
             return res.status(404).json({
@@ -104,11 +110,13 @@ const getAllCategory=async(req,res)=>{
 }
 
 const DeleteOne=async (req,res) => {
+    const {id}=req.query
+    if (!id) {
+        return res.status(400).json({ message: 'Category ID is required for deletion' });
+    }
     try {
-
-        const deletedCategory =await Categories.findOneAndDelete(
-            {_id:req.params.id}
-        )
+        
+        const deletedCategory =await Categories.findByIdAndDelete(id)
 
         if (!deletedCategory ) {
             return res.status(404).json({

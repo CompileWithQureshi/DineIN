@@ -8,9 +8,9 @@ import { CreateTable, getAllTables,UpdateTable } from "../Controller/TablesContr
 
 const tableroute=Router()
 
-tableroute.post('/create',CreateTable)
-tableroute.get('/getAll',getAllTables)
-tableroute.put('/updateTable',UpdateTable)
+tableroute.post('/table',CreateTable)
+tableroute.get('/tables',getAllTables)
+tableroute.put('/table',UpdateTable)
 
 
 
