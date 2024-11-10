@@ -19,6 +19,11 @@ const UserSchema=mongoose.Schema(
             required:true,
             match: /^[6-9]\d{9}$/,
           },
+          role: {
+            type: String,
+            enum: ['admin', 'user'], // Define the role as either admin or user
+            default: 'user' // Default role is user
+        }
           
     },
     {
