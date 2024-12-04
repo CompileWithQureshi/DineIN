@@ -1,4 +1,3 @@
-import React, {  useState  } from 'react'
 import logo from '../../assets/Logo.svg';
 
 import {useForm} from 'react-hook-form'
@@ -8,9 +7,9 @@ import { useNavigate } from 'react-router-dom';
 function Login() {
   const navigate=useNavigate()
 
-  const [toggel,setToggel]=useState(true)
   const {register,handleSubmit,formState:{errors}}=useForm({
     defaultValues: {
+      UserName:'',
       PhoneNumber: '',
       password: '',
     },
@@ -32,9 +31,7 @@ function Login() {
     
   };
  
-function handelToggle(){
-  setToggel((prev)=>!prev)
-}
+
   
   return (
     <div className='flex items-center justify-center min-h-screen bg-gray-100'
@@ -46,24 +43,23 @@ function handelToggle(){
             <img src="./Logotext.png" alt="logo" className='w-28 mx-auto my-2' />
             <p className='text-center my-1 text-gray-500 font-semibold '>FLAVORS FOR ROYALTY</p>
           </div>
-          <div className='mt-10 p-10 flex justify-center h-96 bg-white w-80 border border-3 rounded-lg '>
+          <div className='mt-10 p-10 flex justify-center h-auto bg-white w-80 border border-3 rounded-lg '>
             <form action="post" className='flex flex-col items-center' onSubmit={handleSubmit(onSubmit)}>
-    <div className='flex  border-2 w-56 h-12 p-2 rounded-md justify-between items-center bg-slate-200 mb-4'>
-      <button className={`${toggel== true?'bg-red-600':'bg-gray-600'} text-white font-bold rounded-xl text-center h-8 w-20`} onClick={handelToggle} id='User'>User</button>
-      <button className={`${toggel== false?'bg-red-600':'bg-gray-600'} text-white font-bold rounded-xl text-center h-8 w-20`} onClick={handelToggle} id='Admin'>Admin </button>
-    </div>
+   
 
-    <div className='text-center flex flex-col '>
+    <div className='text-center flex flex-col'>
+      <input type='text' className=' border-2 w-56 h-12 p-2 rounded-md my-2' placeholder='Username' {...register('UserName',{required:'Name is requried'})}/>
+      <p className='text-red-400 text-start text-sm font-semibold'>{errors.UserName?.message}</p>
       <input type="Number" className=' border-2 w-56 h-12 p-2 rounded-md my-2' placeholder='Phone Number' {...register('PhoneNumber',{ required :'Number is required',pattern:{
         value:phoneNumberRegex,
         message:'Invalid phone number format'
       }, })}/>
-      <p>{errors.PhoneNumber?.message}</p>
+      <p className='text-red-400 text-start text-sm font-semibold'>{errors.PhoneNumber?.message}</p>
 
       <input type="password" className=' border-2 w-56 h-12 p-2 rounded-md my-2' placeholder=' password'
       {...register('password',{required :'password should be  5 digits ',minLength:5})}/>
-      <p>{errors.password?.message}</p> 
-      <button className='w-56 bg-red-500 h-12 rounded-md font-bold text-white' type='submit'>Login</button>
+      <p className='text-red-400 text-start text-sm font-semibold'>{errors.password?.message}</p> 
+      <button className='w-56 bg-red-500 h-12 rounded-md font-bold text-white mt-1' type='submit'>Login</button>
     </div>
     
                 </form>

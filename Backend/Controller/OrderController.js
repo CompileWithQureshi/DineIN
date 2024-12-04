@@ -13,7 +13,7 @@ const CreateOrder =async(req,res)=>{
     //   ]
      
 
-    if (!product || product.length ===0 ) {
+    if (!product || product.length === 0 ) {
         return res.status(400).json({
             message:'product List is empty'
         })

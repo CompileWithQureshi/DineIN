@@ -7,13 +7,15 @@ import Scanner from './pages/UserPanel/Scanner'; // Scanner page without NavBar
 import Cart from './pages/UserPanel/Cart'; // Corrected import
 import Orders from './pages/UserPanel/Orders'; // Corrected import
 import List from './pages/UserPanel/List'; // Corrected import
+import SingUp from './pages/UserPanel/SingUp';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="scanner" element={<Scanner />} />
+        <Route path='/' element={<SingUp/>}/>
+        <Route path="/login" element={<Login />} />
+        <Route path="/scanner" element={<Scanner />} />
         <Route path="main" element={<Layout />}>
           <Route index element={<Main />} />
           <Route path='list' element={<List />} />
