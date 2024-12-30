@@ -11,9 +11,13 @@ function Login() {
 
   const handleToggle = (event) => {
     event.preventDefault(); // Prevent button click from submitting the form
-    setToggle(!toggle);
-    console.log(toggle);
-    
+    const buttonId = event.target.id;
+
+    if (buttonId === 'SignUp') {
+      navigate('/signup'); // Navigate to the SignUp page
+    } else {
+      setToggle(true); // Keep login on current page
+    }
   };
 
   // React Hook Form setup
@@ -23,7 +27,7 @@ function Login() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      UserName:'',
+      UserName: '',
       PhoneNumber: '',
       password: '',
     },
@@ -34,15 +38,8 @@ function Login() {
 
   // Form submission handler
   const onSubmit = (data) => {
-
     if (data.PhoneNumber && data.password) {
-
-      // Navigate based on toggle state
-      if (toggle) {
-        navigate('/scanner'); // User dashboard
-      } else {
-        navigate('/admin'); // Admin dashboard
-      }
+      navigate('/scanner'); // Navigate to User dashboard
     } else {
       console.log('Input field is empty');
     }
@@ -67,84 +64,68 @@ function Login() {
         </div>
 
         {/* Form Container */}
-        <div className="mt-10 p-10  bg-white w-80 border rounded-lg">
+        <div className="mt-10 p-10 bg-white w-80 border rounded-lg">
           <form
             action="post"
             className="flex flex-col items-center "
             onSubmit={handleSubmit(onSubmit)}
           >
             {/* User/Admin Toggle */}
-            <div className="flex border-2  h-12 p-2 rounded-3xl justify-between items-center w-64 bg-gray-100 ">
+            <div className="flex border-2 h-12 p-2 rounded-2xl justify-between items-center w-64 bg-gray-100">
               <button
-                className={`${toggle ? 'bg-red-600 font-semibold text-white' : 'bg-transparent font-medium text-black'}   rounded-3xl text-center h-8 w-28 `}
+                className={`${toggle ? 'bg-red-600 font-semibold text-white' : 'bg-transparent font-medium text-black'} rounded-xl text-center h-8 w-28`}
                 onClick={handleToggle}
                 id="User"
               >
                 Login
               </button>
               <button
-                className={`${!toggle ? 'bg-red-600 font-semibold text-white' : 'bg-transparent font-medium text-black'}   rounded-3xl text-center h-8 w-28`}
+                className={`${!toggle ? 'bg-red-600 font-semibold text-white' : 'bg-transparent font-medium text-black'} rounded-xl text-center h-8 w-28`}
                 onClick={handleToggle}
-                id="Admin"
+                id="SignUp"
               >
                 SignUp
               </button>
             </div>
 
             {/* Input Fields */}
-            {!toggle && (
-  <>
-    <input
-      type="text"
-      className="border-2 w-56 h-12 p-2 rounded-xl my-2 bg-gray-100"
-      placeholder="User Name"
-      {...register('UserName', {
-        required: 'Name is required',
-      })}
-    />
-    <p className="text-red-400 text-start text-sm font-semibold w-56">
-      {errors.UserName?.message}
-    </p>
-  </>
-)}
+            <input
+              type="number"
+              className="border-2 w-56 h-12 p-2 rounded-md my-2 bg-gray-100"
+              placeholder="Phone Number"
+              {...register('PhoneNumber', {
+                required: 'Number is required',
+                pattern: {
+                  value: phoneNumberRegex,
+                  message: 'Invalid phone number format',
+                },
+              })}
+            />
+            <p className="text-red-400 text-start text-sm font-semibold w-56">
+              {errors.PhoneNumber?.message}
+            </p>
 
-<input
-  type="number"
-  className="border-2 w-56 h-12 p-2 rounded-xl my-2 bg-gray-100"
-  placeholder="Phone Number"
-  {...register('PhoneNumber', {
-    required: 'Number is required',
-    pattern: {
-      value: phoneNumberRegex,
-      message: 'Invalid phone number format',
-    },
-  })}
-/>
-<p className="text-red-400 text-start text-sm font-semibold w-56 ">
-  {errors.PhoneNumber?.message}
-</p>
-
-<input
-  type="password"
-  className="border-2 w-56 h-12 p-2 rounded-xl my-2 bg-gray-100"
-  placeholder="Password"
-  {...register('password', {
-    required: 'Password is required',
-    minLength: {
-      value: 5,
-      message: 'Password should be at least 5 characters',
-    },
-  })}
-/>
-<p className="text-red-400 text-start text-sm font-semibold w-56">
-  {errors.password?.message}
-</p>
+            <input
+              type="password"
+              className="border-2 w-56 h-12 p-2 rounded-md my-2 bg-gray-100"
+              placeholder="Password"
+              {...register('password', {
+                required: 'Password is required',
+                minLength: {
+                  value: 5,
+                  message: 'Password should be at least 5 characters',
+                },
+              })}
+            />
+            <p className="text-red-400 text-start text-sm font-semibold w-56">
+              {errors.password?.message}
+            </p>
             {/* Submit Button */}
             <button
-              className="w-56 bg-red-500 h-12 rounded-xl font-bold text-white mt-1"
+              className="w-56 bg-red-500 h-12 rounded-md font-bold text-white mt-1"
               type="submit"
             >
-              {!toggle?'Sign Up':"Login"}
+              Login
             </button>
           </form>
         </div>
