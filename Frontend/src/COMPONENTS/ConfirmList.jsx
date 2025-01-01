@@ -16,18 +16,20 @@ function ConfirmList({item,onDecrease}) {
   
   
   return (
-    <div className='w-80 h-auto shadow-lg shadow-gray-400 p-2 rounded-lg border flex m-5 gap-6 items-center relative' key={item.ProductId}>
+    <div className='w-80 h-auto shadow-lg shadow-gray-400 p-2 rounded-lg border flex justify-between m-5 gap-6 items-center relative' key={item.ProductId}>
     <span className='absolute top-[-16px] left-0 w-6 h-6 flex justify-center items-center p-2 text-xs  rounded-full bg-red-500 text-white font'>{item.quantity}</span>
 
-    <img src={item.products.images} alt="images" className='h-20 w-14'/>
+   <div className='flex items-center gap-2'>
+   <img src={item.products.images} alt="images" className='h-20 w-14'/>
 
-    <div className=' '>
-      <h2 className='font-bold text-xl'>{item.products.title}</h2>
-      <p className='text-base font-medium'>Price: {item.products.price}</p>
+<div className=' '>
+  <h2 className='font-bold text-xl'>{item.products.title}</h2>
+  <p className='text-base font-medium'>Price: {item.products.price}</p>
 
-      
+  
 
-    </div>
+</div>
+   </div>
     {
       onDecrease?<button 
       className='bg-red-500 text-white w-6 h-6 rounded-md flex items-center justify-center hover:bg-red-800 transition duration-200 font-bold text-sm' // Adjust text size here
