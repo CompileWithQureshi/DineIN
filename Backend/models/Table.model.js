@@ -7,9 +7,10 @@ const TableSchema=mongoose.Schema({
             type: String,
             required:false
         },
-        tableNumber:{
+        tableNumber: {
             type: String,
-            required:true
+            required: true,
+            unique: true
         },
         status:{
             type: Boolean,

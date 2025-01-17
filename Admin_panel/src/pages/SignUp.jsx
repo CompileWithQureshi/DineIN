@@ -15,7 +15,9 @@ function SingUp() {
   const phoneNumberRegex = /^[6-9]\d{9}$/; 
   const onSubmit=data=>{
     const formData=JSON.stringify(data)
-    console.log(formData.length);
+    // console.log(formData.length);
+    console.log(data);
+    
 
         if (data.PhoneNumber && data.password) {
           localStorage.setItem('UserData',formData)

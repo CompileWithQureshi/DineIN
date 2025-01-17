@@ -1,7 +1,7 @@
 import { Tables } from "../models/Table.model.js";
 
 const CreateTable = async (req, res) => {
-    const { tableNumber, status } = req.body;
+    const { tableNumber, status=true } = req.body;
 
     if ( !tableNumber || status === undefined) {
         return res.status(400).json({

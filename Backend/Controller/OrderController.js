@@ -4,100 +4,71 @@ import { query } from 'express'
 
 
 
-const CreateOrder =async(req,res)=>{
-    const {user,product}=req.body
-    //  console.log(product);
-     // output  [
-    //     { item: '672779bb6092e0490b11717e', quantity: 2 },
-    //     { item: '672779bb6092e0490b11717e', quantity: 3 }
-    //   ]
-     
+const CreateOrder = async (req, res) => {
+    const { user, product, tableNumber } = req.body;
 
-    if (!product || product.length === 0 ) {
-        return res.status(400).json({
-            message:'product List is empty'
-        })
+    if (!product || product.length === 0) {
+        return res.status(400).json({ message: 'Product list is empty' });
     }
-     
 
     try {
+        // Validate table
+        const table = await Tables.findById(tableNumber);
+        if (!table) {
+            return res.status(404).json({ message: `Table with ID ${tableNumber} not found` });
+        }
 
-        let  totalPrice=0;
-        
-        for (const  data of product) {
-            // console.log(data);
-            
-            const {item,quantity }=data
-            // console.log(data);
-            
-
-            const Product=await Items.findById(item)
-            // console.log(Product);
+        let totalPrice = 0;
+        for (const data of product) {
+            const { item, quantity } = data;
+            const Product = await Items.findById(item);
             if (!Product) {
-                return res.status(404).json({
-                    message: `Product with ID ${item} not found`
-                });
+                return res.status(404).json({ message: `Product with ID ${item} not found` });
             }
-            const Price=Product.itemPrice *quantity
-            
-            totalPrice+=Price
-            // console.log(typeof totalPrice);
-            
+            totalPrice += Product.itemPrice * quantity;
         }
 
-        const newOrder =new Orders({
-            user:user,
+        const newOrder = new Orders({
+            user,
             product,
-            totalPrice
-        })
+            totalPrice,
+            tableNumber,
+        });
 
-        const saveorder= await newOrder.save()
-        res.status(200).json(
-            {
-                message:'Order Created success',
-                data:saveorder
-            }
-        )
-        
-
+        const saveOrder = await newOrder.save();
+        res.status(200).json({
+            message: 'Order created successfully',
+            data: saveOrder,
+        });
     } catch (error) {
-        res.status(500).json({
-            message:`Error :${error}`
-        })
+        res.status(500).json({ message: `Error: ${error.message}` });
     }
-} 
+};
 
-const GetAllOrders=async(req,res)=>{
-    const {id}=req.query
-    let query={}
+
+const GetAllOrders = async (req, res) => {
+    const { id } = req.query;
+    const query = id ? { _id: id } : {};
+
     try {
-        if (id) {
-            query._id = id; // Use `_id` if querying by order ID
+        const getData = await Orders.find(query)
+            .populate('product.item')
+            .populate('user')
+            .populate('tableNumber'); // Populate table details
+
+        if (!getData || getData.length === 0) {
+            return res.status(404).json({ message: 'Order not found' });
         }
 
-        const getData=await Orders.find(query).populate('product.item').populate('user')
-        if (!getData || getData.length ===0) {
-            return res.status(404).json({
-                message: `Order not found`
-            });
-        }
-
-        console.log(getData);
-        
-
-        res.status(200).json(
-            {
-                message:'Success',
-                data:getData
-            }
-        )
-        
+        res.status(200).json({
+            message: 'Success',
+            data: getData,
+        });
     } catch (error) {
-        res.status(500).json({
-            message:`Error :${error}`
-        })
+        res.status(500).json({ message: `Error: ${error.message}` });
     }
-}
+};
+
 
 
 

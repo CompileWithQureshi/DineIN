@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import logo from '../../assets/Logo.svg';
+import logo from  '/src/assets/Logo.svg';
 
 function Login() {
   const navigate = useNavigate();
@@ -39,13 +39,11 @@ function Login() {
   // Form submission handler
   const onSubmit = (data) => {
     if (data.PhoneNumber && data.password) {
-        localStorage.setItem('UserData', JSON.stringify(data)); // Save as JSON string
-        navigate('/scanner'); // Navigate to User dashboard
+    //   navigate('/scanner'); // Navigate to User dashboard
     } else {
-        console.log('Input field is empty');
+      console.log('Input field is empty');
     }
-};
-
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
